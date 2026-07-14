@@ -1,0 +1,21 @@
+@import "tailwindcss";
+
+@theme {
+  /* Paleta baseada no seu protótipo */
+  --color-brand-purple: #8b5cf6; /* O tom de roxo do bloco central */
+  --color-brand-pink: #d946ef;   /* O tom do ícone sorridente */
+  --color-bg-main: #ffffff;
+  --color-text-primary: #111827; /* Quase preto para contrastar bem */
+  --color-text-secondary: #6b7280; /* Cinza para textos de apoio/datas */
+}
+
+@layer base {
+  body {
+    background-color: var(--color-bg-main);
+    color: var(--color-text-primary);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    /* Usando uma fonte limpa e sem serifa para manter o aspecto moderno */
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  }
+}
