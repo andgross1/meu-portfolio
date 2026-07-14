@@ -1,15 +1,54 @@
+import { useState } from 'react';
+import { experiencesData, type Experience } from '../data/experiences';
+
+function ExperienceItem({ title, period, company, description }: Experience) {
+  const [isOpen, setIsOpen] = useState(false);
+
+  return (
+    <div className="border-b border-gray-200">
+      <button
+        onClick={() => setIsOpen(!isOpen)}
+        className="w-full flex flex-col md:flex-row justify-between items-start md:items-center py-6 gap-2 text-left hover:bg-gray-50 transition-colors px-4 -mx-4 rounded-lg cursor-pointer group"
+      >
+        <div className="flex items-center gap-3">
+          <span className="font-bold text-[var(--color-text-primary)] group-hover:text-gray-600 transition-colors">
+            {title}
+          </span>
+          <svg 
+            className={`w-4 h-4 text-gray-400 transition-transform duration-300 ${isOpen ? 'rotate-180' : ''}`} 
+            fill="none" viewBox="0 0 24 24" stroke="currentColor"
+          >
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+          </svg>
+        </div>
+        <span className="text-[var(--color-text-secondary)] text-sm whitespace-nowrap">{period}</span>
+      </button>
+      
+      <div 
+        className={`grid transition-all duration-300 ease-in-out ${isOpen ? 'grid-rows-[1fr] opacity-100 pb-6' : 'grid-rows-[0fr] opacity-0'}`}
+      >
+        <div className="overflow-hidden px-4 -mx-4">
+          <div className="flex flex-col gap-2 mt-2">
+            <span className="font-medium text-sm text-[var(--color-brand-purple)]">{company}</span>
+            <p className="text-sm text-[var(--color-text-secondary)] leading-relaxed max-w-3xl">
+              {description}
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 export function About() {
   return (
     <section className="px-6 md:px-12 py-16 max-w-5xl mx-auto" id="sobre">
       
-      {/* Bloco 1: Textos e Assinatura */}
       <div className="flex flex-col md:flex-row gap-8 md:gap-16 mb-24">
-        {/* Título na esquerda (Desktop) / Cima (Mobile) */}
         <div className="md:w-1/3">
           <h3 className="text-lg font-bold text-[var(--color-text-primary)]">Sobre meu trabalho</h3>
         </div>
         
-        {/* Textos na direita (Desktop) / Baixo (Mobile) */}
         <div className="md:w-2/3 flex flex-col gap-6 text-[var(--color-text-secondary)] leading-relaxed">
           <p>
             Sou o André Gross, desenvolvedor focado em construir produtos digitais significativos
@@ -27,9 +66,7 @@ export function About() {
             limpas e experiências intuitivas para usuários reais.
           </p>
           
-          {/* Assinatura (Usando uma fonte cursiva para simular) */}
           <div className="mt-4">
-             {/* Você pode trocar essa div por uma tag <img> depois, caso tenha a imagem da sua assinatura */}
             <span className="font-['Dancing_Script',cursive] text-4xl text-[var(--color-text-primary)] -rotate-3 inline-block">
               André Gross
             </span>
@@ -37,33 +74,18 @@ export function About() {
         </div>
       </div>
 
-      {/* Bloco 2: Linha do Tempo (Skills / Experiência) */}
       <div className="flex flex-col border-t border-gray-200">
-        
-        {/* Item da Lista */}
-        <div className="flex flex-col md:flex-row justify-between py-6 border-b border-gray-200 gap-2">
-          <span className="font-bold text-[var(--color-text-primary)]">Desenvolvedor Frontend Freelance</span>
-          <span className="text-[var(--color-text-secondary)] text-sm">2023–Presente</span>
-        </div>
-
-        {/* Item da Lista */}
-        <div className="flex flex-col md:flex-row justify-between py-6 border-b border-gray-200 gap-2">
-          <span className="font-bold text-[var(--color-text-primary)]">Líder de Produção & Qualidade</span>
-          <span className="text-[var(--color-text-secondary)] text-sm">Experiência Prévia</span>
-        </div>
-
-        {/* Item da Lista */}
-        <div className="flex flex-col md:flex-row justify-between py-6 border-b border-gray-200 gap-2">
-          <span className="font-bold text-[var(--color-text-primary)]">Stack Principal: React, TS, Tailwind</span>
-          <span className="text-[var(--color-text-secondary)] text-sm">Em uso Constante</span>
-        </div>
-
-        {/* Item da Lista */}
-        <div className="flex flex-col md:flex-row justify-between py-6 border-b border-gray-200 gap-2">
-          <span className="font-bold text-[var(--color-text-primary)]">Projetos Pessoais & Automação</span>
-          <span className="text-[var(--color-text-secondary)] text-sm">Contínuo</span>
-        </div>
-
+        {/* Renderização dinâmica da lista de experiências usando .map() */}
+        {experiencesData.map((experience) => (
+          <ExperienceItem 
+            key={experience.id}
+            id={experience.id}
+            title={experience.title}
+            period={experience.period}
+            company={experience.company}
+            description={experience.description}
+          />
+        ))}
       </div>
     </section>
   );
