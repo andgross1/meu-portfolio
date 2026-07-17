@@ -1,22 +1,29 @@
-@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600&family=Inter:wght@400;500;700;800&display=swap');
 @import "tailwindcss";
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600&family=Inter:wght@400;500;700;800&display=swap');
 
 @theme {
-  /* Paleta baseada no seu protótipo */
-  --color-brand-purple: #8b5cf6; /* O tom de roxo do bloco central */
-  --color-brand-pink: #d946ef;   /* O tom do ícone sorridente */
-  --color-bg-main: #ffffff;
-  --color-text-primary: #111827; /* Quase preto para contrastar bem */
-  --color-text-secondary: #6b7280; /* Cinza para textos de apoio/datas */
+  /* Sua nova paleta elegante */
+  --color-brand-100: #CAD2C5; /* Verde bem claro - ótimo para fundos alternativos */
+  --color-brand-300: #84A98C; /* Sálvia médio - detalhes e bordas */
+  --color-brand-500: #52796F; /* Verde escuro - botões e destaques */
+  --color-brand-700: #354F52; /* Ardósia - subtítulos e textos de apoio */
+  --color-brand-900: #2F3E46; /* Quase preto/chumbo - texto principal */
+  
+  /* Cor de base do site (Off-white para não cansar a vista) */
+  --color-bg-base: #F8F9FA; 
 }
 
 @layer base {
   body {
-    background-color: var(--color-bg-main);
-    color: var(--color-text-primary);
+    background-color: var(--color-bg-base);
+    color: var(--color-brand-900);
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    /* Usando uma fonte limpa e sem serifa para manter o aspecto moderno */
     font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  }
+  
+  /* Suaviza a rolagem da página ao clicar nos links do menu */
+  html {
+    scroll-behavior: smooth;
   }
 }
