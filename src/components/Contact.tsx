@@ -1,9 +1,18 @@
+import { useEffect } from 'react';
 import { useForm, ValidationError } from '@formspree/react';
 
 export function Contact() {
   const [state, handleSubmit] = useForm("xdaqewrl");
   
   const whatsappUrl = "https://wa.me/5511985189411?text=Vi%20seu%20portf%C3%B3lio%20e%20gostaria%20de%20conversar%20com%20voc%C3%AA.";
+
+  // Efeito que observa quando o envio é concluído com sucesso para limpar o formulário
+  useEffect(() => {
+    if (state.succeeded) {
+      const form = document.getElementById("contact-form") as HTMLFormElement;
+      if (form) form.reset();
+    }
+  }, [state.succeeded]);
 
   return (
     <section className="px-6 md:px-12 py-24 max-w-7xl mx-auto" id="contato">
@@ -20,7 +29,8 @@ export function Contact() {
         
         <div className="md:w-1/2 w-full">
           
-          <form onSubmit={handleSubmit} className="flex flex-col gap-6">
+          {/* Adicionamos o ID 'contact-form' para o useEffect conseguir encontrá-lo */}
+          <form id="contact-form" onSubmit={handleSubmit} className="flex flex-col gap-6">
             <div className="flex flex-col md:flex-row gap-4">
               <div className="flex-1">
                 <label className="block text-xs font-medium text-[var(--color-text-secondary)] mb-2 uppercase tracking-wider">Nome</label>
@@ -88,7 +98,6 @@ export function Contact() {
               </div>
             )}
             
-            {/* A correção foi feita nesta linha abaixo: */}
             {state.errors && !state.succeeded && (
               <div className="mt-2 p-4 bg-red-50 text-red-700 text-sm rounded-lg border border-red-200 font-medium">
                 Verifique os campos acima e tente novamente.
