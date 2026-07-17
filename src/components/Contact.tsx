@@ -1,5 +1,8 @@
+import { useForm, ValidationError } from '@formspree/react';
+
 export function Contact() {
-  // Link gerado com o seu número e mensagem pré-definida
+  const [state, handleSubmit] = useForm("xdaqewrl");
+  
   const whatsappUrl = "https://wa.me/5511985189411?text=Vi%20seu%20portf%C3%B3lio%20e%20gostaria%20de%20conversar%20com%20voc%C3%AA.";
 
   return (
@@ -13,23 +16,23 @@ export function Contact() {
          />
       </div>
 
-      <div className="flex flex-col md:flex-row gap-16 items-end">
+      <div className="flex flex-col md:flex-row gap-16 items-end relative">
         
-        {/* Lado Esquerdo: Formulário */}
         <div className="md:w-1/2 w-full">
-          {/* ATENÇÃO: Substitua o link abaixo pelo seu endpoint do Formspree */}
-          <form action="https://formspree.io/f/xdaqewrl" method="POST" className="flex flex-col gap-6">
+          
+          <form onSubmit={handleSubmit} className="flex flex-col gap-6">
             <div className="flex flex-col md:flex-row gap-4">
               <div className="flex-1">
                 <label className="block text-xs font-medium text-[var(--color-text-secondary)] mb-2 uppercase tracking-wider">Nome</label>
-                {/* Atributo 'name' é obrigatório para o Formspree funcionar */}
                 <input 
                   type="text" 
                   name="name"
                   required
                   placeholder="Seu nome" 
                   className="w-full bg-gray-50 border border-gray-200 rounded-lg px-4 py-3 text-sm outline-none focus:border-[var(--color-text-primary)] transition-colors" 
+                  disabled={state.submitting}
                 />
+                <ValidationError prefix="Nome" field="name" errors={state.errors} className="text-red-500 text-xs mt-1" />
               </div>
               <div className="flex-1">
                 <label className="block text-xs font-medium text-[var(--color-text-secondary)] mb-2 uppercase tracking-wider">Email</label>
@@ -39,7 +42,9 @@ export function Contact() {
                   required
                   placeholder="seu@email.com" 
                   className="w-full bg-gray-50 border border-gray-200 rounded-lg px-4 py-3 text-sm outline-none focus:border-[var(--color-text-primary)] transition-colors" 
+                  disabled={state.submitting}
                 />
+                <ValidationError prefix="Email" field="email" errors={state.errors} className="text-red-500 text-xs mt-1" />
               </div>
             </div>
             <div>
@@ -50,19 +55,20 @@ export function Contact() {
                 rows={4} 
                 placeholder="Como posso ajudar no seu projeto?" 
                 className="w-full bg-gray-50 border border-gray-200 rounded-lg px-4 py-3 text-sm outline-none focus:border-[var(--color-text-primary)] transition-colors resize-none"
+                disabled={state.submitting}
               ></textarea>
+              <ValidationError prefix="Mensagem" field="message" errors={state.errors} className="text-red-500 text-xs mt-1" />
             </div>
             
-            {/* Botões de Ação */}
-            <div className="flex flex-col sm:flex-row gap-4 mt-2">
+            <div className="flex flex-col sm:flex-row gap-4 mt-2 items-center">
               <button 
                 type="submit" 
-                className="bg-[var(--color-text-primary)] text-white font-medium py-3 px-8 rounded-full hover:bg-gray-800 transition-colors"
+                disabled={state.submitting}
+                className="bg-[var(--color-text-primary)] text-white font-medium py-3 px-8 rounded-full hover:bg-gray-800 transition-colors disabled:opacity-70 disabled:cursor-not-allowed min-w-[180px]"
               >
-                Enviar Mensagem
+                {state.submitting ? 'Enviando...' : 'Enviar Mensagem'}
               </button>
               
-              {/* Botão do WhatsApp */}
               <a 
                 href={whatsappUrl}
                 target="_blank"
@@ -75,10 +81,22 @@ export function Contact() {
                 WhatsApp
               </a>
             </div>
+
+            {state.succeeded && (
+              <div className="mt-2 p-4 bg-green-50 text-green-700 text-sm rounded-lg border border-green-200 font-medium">
+                Sua mensagem foi enviada com sucesso! Entrarei em contato em breve.
+              </div>
+            )}
+            
+            {/* A correção foi feita nesta linha abaixo: */}
+            {state.errors && !state.succeeded && (
+              <div className="mt-2 p-4 bg-red-50 text-red-700 text-sm rounded-lg border border-red-200 font-medium">
+                Verifique os campos acima e tente novamente.
+              </div>
+            )}
           </form>
         </div>
 
-        {/* Lado Direito: Linha Decorativa do Layout */}
         <div className="md:w-1/2 w-full flex flex-col justify-end pb-4 border-b-2 border-[var(--color-text-primary)]">
            <p className="text-[var(--color-text-secondary)] text-right text-sm">
              Aberto para novas oportunidades e conexões.
