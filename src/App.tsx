@@ -1,6 +1,7 @@
 import { Header } from './components/Header'
 import { Hero } from './components/Hero'
 import { About } from './components/About'
+import { Projects } from './components/Projects'
 
 function App() {
   return (
@@ -8,7 +9,8 @@ function App() {
       <Header />
       <main>
         <Hero />
-        <About /> {/* <-- Nova seção adicionada aqui */}
+        <About />
+        <Projects />
       </main>
     </div>
   )
