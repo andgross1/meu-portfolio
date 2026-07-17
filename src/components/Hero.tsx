@@ -2,7 +2,7 @@ import { Reveal } from './Reveal';
 
 export function Hero() {
   return (
-    <section className="flex flex-col items-center justify-center text-center mt-24 mb-32 px-4" id="inicio">
+    <section className="flex flex-col items-center justify-center min-h-screen text-center px-4" id="inicio">
       <Reveal>
         <h1 className="text-5xl md:text-7xl font-extrabold tracking-tight text-[var(--color-brand-900)] mb-1">
           André Gross.

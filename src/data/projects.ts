@@ -1,5 +1,4 @@
 // src/data/projects.ts
-
 export interface Project {
   id: number;
   title: string;
